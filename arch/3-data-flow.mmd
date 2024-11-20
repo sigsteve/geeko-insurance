@@ -1,0 +1,26 @@
+flowchart TD
+    Start[User Uploads Image] --> Frontend
+    Frontend --> |POST image| CheckDamage[api-check-damage]
+    CheckDamage --> |Process Image| AIModel[OLLAMA AI Model]
+    AIModel --> |Response: hasDamage| CheckDamage
+    CheckDamage --> |hasDamage| Frontend
+    Frontend --> Decision{Damage Detected?}
+    Decision -- Yes --> IdentifyVehicle[api-identify-vehicle]
+    IdentifyVehicle --> |Process Image| AIModel
+    AIModel --> |Vehicle Info| IdentifyVehicle
+    IdentifyVehicle --> |Vehicle Info| Frontend
+    Frontend --> AnalyzeDamage[api-analyze-damage]
+    AnalyzeDamage --> |Process Image| AIModel
+    AIModel --> |Damaged Parts| AnalyzeDamage
+    AnalyzeDamage --> |Damaged Parts| Frontend
+    Frontend --> PriceParts[api-price-parts]
+    PriceParts --> |Damaged Parts| AIModel
+    AIModel --> |Priced Parts| PriceParts
+    PriceParts --> |Priced Parts| Frontend
+    Frontend --> EstimateLabor[api-estimate-labor]
+    EstimateLabor --> |Repair Items| AIModel
+    AIModel --> |Labor Estimate| EstimateLabor
+    EstimateLabor --> |Labor Details| Frontend
+    Frontend --> |Display Quote| End[User Views Quote]
+    Decision -- No --> NoDamage[Inform No Damage Detected]
+    NoDamage --> End 

@@ -1,0 +1,32 @@
+sequenceDiagram
+    participant User
+    participant Frontend as BodyDamageQuote Component
+    participant API as Backend API Routes
+    participant AIModel as OLLAMA AI Models
+
+    User ->> Frontend: Uploads Image of Vehicle Damage
+    Frontend ->> API: POST /api/check-damage
+    API ->> AIModel: Is there visible damage?
+    AIModel -->> API: Damage Detected / Not Detected
+    API -->> Frontend: Returns hasDamage
+    alt Damage Detected
+        Frontend ->> API: POST /api/identify-vehicle
+        API ->> AIModel: Identify vehicle make and model
+        AIModel -->> API: Vehicle Details
+        API -->> Frontend: Returns Vehicle Info
+        Frontend ->> API: POST /api/analyze-damage
+        API ->> AIModel: List damaged parts
+        AIModel -->> API: Damaged Parts List
+        API -->> Frontend: Returns Damaged Parts
+        Frontend ->> API: POST /api/price-parts
+        API ->> AIModel: Get repair methods and costs
+        AIModel -->> API: Priced Parts Details
+        API -->> Frontend: Returns Priced Parts
+        Frontend ->> API: POST /api/estimate-labor
+        API ->> AIModel: Estimate labor hours and costs
+        AIModel -->> API: Labor Estimate
+        API -->> Frontend: Returns Labor Details
+        Frontend ->> User: Displays Repair Quote
+    else No Damage Detected
+        Frontend ->> User: Informs no damage detected
+    end 

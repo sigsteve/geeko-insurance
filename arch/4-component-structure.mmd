@@ -1,0 +1,79 @@
+classDiagram
+    class BodyDamageQuote {
+        + File image
+        + number currentPhase
+        + boolean isProcessing
+        + Vehicle selectedVehicle
+        + RepairItem[] repairItems
+        + PhaseData phaseData
+        + LLMInteractionDetails llmDetails
+        + boolean isDemoMode
+        + void handleImageUpload(event)
+        + Promise~Vehicle~ identifyVehicle(file)
+        + Promise~DamageCheck~ checkDamage(file)
+        + Promise~void~ startProcessing()
+        + Promise~void~ handleNextPhase()
+        + Promise~void~ handleRetryDamageCheck()
+        + Promise~void~ handleDownloadQuote()
+        + void toggleDemoMode()
+    }
+
+    class QuotePDF {
+        + RepairItem[] repairItems
+        + number totalCost
+        + Vehicle vehicle
+        + string claimNumber
+        + Promise~Blob~ generatePDF()
+    }
+
+    class APIRoutes {
+        + POST /api/check-damage
+        + POST /api/identify-vehicle
+        + POST /api/analyze-damage
+        + POST /api/price-parts
+        + POST /api/estimate-labor
+        + GET /api/config
+        + GET /api/images/[filename]
+    }
+
+    class AuthSystem {
+        + useAuth()
+        + LoginPage
+        + Promise~void~ login(username, password)
+        + Promise~void~ logout()
+        + boolean isAuthenticated
+    }
+
+    class ImageGallery {
+        + SampleImage[] images
+        + Promise~void~ downloadImage(filename)
+        + void handleImageSelect(image)
+    }
+
+    class UIComponents {
+        <<Interface>>
+        + Card
+        + Button
+        + Input
+        + Label
+        + Table
+        + Motion
+    }
+
+    class Types {
+        <<Interface>>
+        + Vehicle
+        + RepairItem
+        + PhaseData
+        + LLMInteractionDetails
+        + SampleImage
+    }
+
+    BodyDamageQuote --> UIComponents : Uses
+    BodyDamageQuote --> QuotePDF : Generates
+    BodyDamageQuote --> AuthSystem : Authenticates
+    BodyDamageQuote --> APIRoutes : Calls
+    BodyDamageQuote --> Types : Implements
+    ImageGallery --> UIComponents : Uses
+    ImageGallery --> Types : Uses
+    QuotePDF --> Types : Uses

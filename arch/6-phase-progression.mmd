@@ -1,0 +1,34 @@
+stateDiagram-v2
+    [*] --> UploadImage
+    UploadImage --> CheckDamagePhase
+    state CheckDamagePhase {
+        [*] --> ProcessingCheckDamage
+        ProcessingCheckDamage --> DamageDetected
+        ProcessingCheckDamage --> NoDamageDetected
+    }
+    DamageDetected --> IdentifyVehiclePhase
+    state IdentifyVehiclePhase {
+        [*] --> ProcessingIdentifyVehicle
+        ProcessingIdentifyVehicle --> VehicleIdentified
+    }
+    VehicleIdentified --> AnalyzeDamagePhase
+    state AnalyzeDamagePhase {
+        [*] --> ProcessingAnalyzeDamage
+        ProcessingAnalyzeDamage --> DamageAnalyzed
+    }
+    DamageAnalyzed --> PricePartsPhase
+    state PricePartsPhase {
+        [*] --> ProcessingPriceParts
+        ProcessingPriceParts --> PartsPriced
+    }
+    PartsPriced --> EstimateLaborPhase
+    state EstimateLaborPhase {
+        [*] --> ProcessingEstimateLabor
+        ProcessingEstimateLabor --> LaborEstimated
+    }
+    LaborEstimated --> FinalizeClaimPhase
+    FinalizeClaimPhase --> DisplayQuote
+    DisplayQuote --> [*]
+
+    NoDamageDetected --> DisplayNoDamageMessage
+    DisplayNoDamageMessage --> [*]

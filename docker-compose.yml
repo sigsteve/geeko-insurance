@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "9080:3000"
+    env_file:
+      - .env.local
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    profiles:
+      - local
+
+volumes:
+  ollama_data: 

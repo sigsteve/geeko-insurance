@@ -1,0 +1,19 @@
+flowchart TD
+    subgraph Backend API Routes
+        A[api-check-damage]
+        B[api-identify-vehicle]
+        C[api-analyze-damage]
+        D[api-price-parts]
+        E[api-estimate-labor]
+    end
+
+    subgraph "AI Models - SUSE Ollama"
+        F[LLaVA 7B]
+        G[Llama 3.1 8B]
+    end
+
+    A -->|Prompt: Is there visible damage?| F
+    B -->|Prompt: Identify vehicle make and model| F
+    C -->|Prompt: List damaged parts| F
+    D -->|Prompt: Provide repair methods and costs| G
+    E -->|Prompt: Estimate labor hours and costs| G 

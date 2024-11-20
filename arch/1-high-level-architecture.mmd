@@ -1,0 +1,44 @@
+graph TD
+
+  subgraph User Interface
+    A[BodyDamageQuote Component]
+    B[UI Components]
+  end
+
+  subgraph Backend API Routes
+    C[api-check-damage]
+    D[api-identify-vehicle]
+    E[api-analyze-damage]
+    F[api-price-parts]
+    G[api-estimate-labor]
+    H[api-config]
+  end
+
+  subgraph AI Models
+    I[OLLAMA AI Models]
+  end
+
+  subgraph Future Database Integration
+    J[(MongoDB - Coming Soon)]
+  end
+
+  A -->|Uses| B
+  A -->|Calls| C
+  A --> D
+  A --> E
+  A --> F
+  A --> G
+  A -->|Fetches| H
+  C -->|Requests| I
+  D -->|Requests| I
+  E -->|Requests| I
+  F -->|Requests| I
+  G -->|Requests| I
+  H -->|Provides| A
+  
+  %% Future Database Connections
+  C -.->|Future Storage| J
+  D -.->|Future Storage| J
+  E -.->|Future Storage| J
+  F -.->|Future Storage| J
+  G -.->|Future Storage| J 

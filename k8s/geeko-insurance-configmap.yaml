@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: geeko-insurance-config
+  namespace: geeko-insurance
+data:
+  OLLAMA_API_URL: "http://ollama-service:11434/api/generate" 
